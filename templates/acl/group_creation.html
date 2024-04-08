@@ -4,36 +4,34 @@
 
     <div class="container">
         <h2>Group Creation Form</h2>
-        <form>
+        <form action="" method="post">
+            {% csrf_token %}
             <div class="form-group">
-                <label for="groupname">Group Name:</label>
-                <input type="text" class="form-control" id="groupname" placeholder="Enter group name" required>
+                <label for="group_name_id">Group Name:</label>
+                <input type="text" class="form-control" name="group_name" id="group_name_id" placeholder="Enter group name" required>
             </div>
             <div class="form-group">
                 <label for="permissions">Permissions:</label>
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="permission1">
-                            <label class="form-check-label" for="permission1">Permission 1</label>
+                    {% for group, perm in group_of_perm.items %}
+                        <div class="col-md-4 mt-3">
+                            <div class="card-title font-weight-bold">{{ group }}</div>
+                            {% for p in perm %}
+                                <div class="form-check">
+                                   <input
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        id="p.permission"
+                                        name="selected_perm"
+                                        value="{{ p.permission }}"
+                                    >
+                                    <label class="form-check-label" for="permission3">{{ p }}</label>
+                                </div>
+                            {% endfor %}
+
                         </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="permission2">
-                            <label class="form-check-label" for="permission2">Permission 2</label>
-                        </div>
-                        <!-- Add more permissions as needed -->
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="permission3">
-                            <label class="form-check-label" for="permission3">Permission 3</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="permission4">
-                            <label class="form-check-label" for="permission4">Permission 4</label>
-                        </div>
-                        <!-- Add more permissions as needed -->
-                    </div>
+                    {% endfor %}
+
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Create Group</button>

@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,34 +7,46 @@
 <title>Navbar Example</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <style>
-    .popup-message {
-        position: fixed;
-        top: 50px;
-        right: 20px;
-        z-index: 9999;
-    }
+
 </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{% url 'acl:home' %}">Navbar</a>
+
+    <span class="text-primary">session: <span class="text-success"> {{ logged.email }}</span></span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'acl:home' %}">Home</a>
+                <a class="nav-link" href="{% url 'acl:content-listing' %}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'acl:user-creation' %}">Create User</a>
+                <a class="nav-link {% if not 'add_users' in permissions %} disabled {% endif %}" href="{% url 'acl:user-creation' %}">Create User</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'acl:group-creation' %}">Create Group</a>
+                <a class="nav-link {% if not 'add_groups' in permissions %} disabled {% endif %}" href="{% url 'acl:group-creation' %}">Create Group</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'acl:user-logout' %}">Logout</a>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown show">
+                  <a class="btn  dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Languages
+                  </a>
+
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      {% get_available_languages as LANGUAGES %}
+                      {% get_language_info_list for LANGUAGES as langs %}
+                      {% for lang in langs %}
+                        <a class="dropdown-item" href="/{{ lang.code }}/">{{ lang.name_local }}</a>
+                      {% endfor %}
+                  </div>
+                </div>
             </li>
         </ul>
     </div>
@@ -43,14 +56,15 @@
     {% if is_home_page %}
         <div class="container">
             <h2>Login</h2>
-            <form>
+            <form action="login/" method="post">
+                {% csrf_token %}
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+                    <input type="email" class="form-control" name="email" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+                    <input type="password" class="form-control" name="password" placeholder="Enter password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>

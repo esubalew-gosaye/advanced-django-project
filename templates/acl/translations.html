@@ -1,0 +1,19 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Translation</title>
+</head>
+<body>
+    <code>
+        {% translate 'Hello, My name is' %}: Jane Doe <br>
+        {% translate 'What is your name?' %}
+    </code>
+<div>
+    <p>
+        {{ message }}
+    </p>
+</div>
+</body>
+</html>

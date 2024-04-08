@@ -1,0 +1,55 @@
+{% include "acl/navbar.html" %}
+
+{% block container %}
+    <div class="container">
+        <h2>User List</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Permission</th>
+                    <th>Groups</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if 'view_users' in permissions %}
+                {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {%  for perm in user.permissions.select_related %}
+                            <li>{{ perm }}</li>
+                        {% endfor %}
+                        {%  for group in user.groups.select_related %}
+                            {%  for perm in group.permissions.select_related %}
+                                <li>{{ perm }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {%  for group in user.groups.select_related %}
+                            <li>{{ group }}</li>
+                        {% endfor %}
+                    </td>
+                    <td>
+{#                        <a href="{% url 'edit_user' user.id %}" class="btn btn-primary">Edit</a>#}
+{#                        <a href="{% url 'delete_user' user.id %}" class="btn btn-danger">Delete</a>#}
+
+                        <a href="" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
+                        <a href="" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
+                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <p class="text-danger font-weight-bold">You don't have a permission to view</p>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

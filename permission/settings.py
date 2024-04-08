@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import django
+from django.utils.translation import gettext_lazy as _
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,12 +42,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'acl'
+    'acl',
+    'restapi',
+    'django_restframework'
+]
+
+# This list stores apps that created by user without including modules
+MY_APPS = [
+    'acl',
+    'restapi',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -76,10 +89,21 @@ WSGI_APPLICATION = 'permission.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'permission',
+        'PORT': '5432',
+        'HOST': '127.0.0.1',
+        'USER': 'postgres',
+        'PASSWORD': ''
     }
 }
 
@@ -102,16 +126,46 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
+EXTRA_LANG_INFO = {
+    'am': {
+        'bidi': False,
+        'code': 'am',
+        'name': 'Amharic',
+        'name_local': 'አማርኛ',
+    },
+    'om': {
+        'bidi': False,
+        'code': 'om',
+        'name': 'Oromo',
+        'name_local': 'Oromiffa',
+    },
+    'en': {
+        'bidi': False,
+        'code': 'en',
+        'name': 'English',
+        'name_local': 'English',
+    }
+}
+LANG_INFO = dict(EXTRA_LANG_INFO.items())
+django.conf.locale.LANG_INFO = LANG_INFO
+LANGUAGES = [
+    ('am', _('Amharic')),
+    ('en', _('English')),
+    ('om', _('Oromo'))
+]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LOCALE_PATHS = (
+    BASE_DIR / 'locale/',
+)
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
