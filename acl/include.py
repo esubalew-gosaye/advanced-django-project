@@ -38,10 +38,10 @@ def get_grouped_permissions():
     return group_of_perm
 
 
-def add_permission_to_db(**kwargs):
+def add_permission_to_db():
     # for register a permission to permission model
     my_apps = settings.MY_APPS
-    excluded_model = []
+    excluded_model = ['TestModel']
 
     for app in my_apps:
         for models in apps.get_app_config(app).get_models():

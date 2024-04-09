@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, reverse
 from acl.models import User, Group, TestModel, Permission
 from django.utils.translation import gettext as _, get_language, activate
 
-from .include import extract_permissions, logged_user, get_grouped_permissions
+from .include import *
 
 
 # Create your views here.
@@ -19,6 +19,7 @@ def translate(request):
 
 
 def home_page(request):
+    add_permission_to_db()
     _user = logged_user(request)
     permissions = extract_permissions(_user)
 

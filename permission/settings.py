@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 # This list stores apps that created by user without including modules
 MY_APPS = [
     'acl',
-    'restapi',
 ]
 
 MIDDLEWARE = [
