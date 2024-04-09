@@ -2,7 +2,13 @@
 
 {% block container %}
     <div class="container">
-        <h2>User List</h2>
+
+    {% if page == 'users' %}
+        <h2>
+            User List
+            <a href="?list=groups" class="btn btn-primary float-right">List Groups</a>
+        </h2>
+        <small>We display 4 permission only here, check detail for more.</small>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -22,11 +28,11 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.email }}</td>
                     <td>
-                        {%  for perm in user.permissions.select_related %}
+                        {%  for perm in user.permissions.select_related|slice:":2" %}
                             <li>{{ perm }}</li>
                         {% endfor %}
-                        {%  for group in user.groups.select_related %}
-                            {%  for perm in group.permissions.select_related %}
+                        {%  for group in user.groups.select_related|slice:":2" %}
+                            {%  for perm in group.permissions.select_related|slice:":2" %}
                                 <li>{{ perm }}</li>
                             {% endfor %}
                         {% endfor %}
@@ -40,8 +46,8 @@
 {#                        <a href="{% url 'edit_user' user.id %}" class="btn btn-primary">Edit</a>#}
 {#                        <a href="{% url 'delete_user' user.id %}" class="btn btn-danger">Delete</a>#}
 
-                        <a href="" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
-                        <a href="" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
+                        <a href="{% url 'acl:user-updating' user.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
+                        <a href="{% url 'acl:user-details' user.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
                         <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">Delete</a>
                     </td>
                 </tr>
@@ -51,5 +57,48 @@
             {% endif %}
             </tbody>
         </table>
+    {% endif %}
+    {% if page == 'groups' %}
+        <table class="table table-striped">
+        <h2>
+            Group List
+            <a href="?list=users" class="btn btn-primary float-right">List Users</a>
+
+        </h2>
+        <small>We display 4 permission only here, check detail for more.</small>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Permission</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if 'view_groups' in permissions %}
+                {% for group in groups %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ group.name }}</td>
+
+                    <td>
+                        {%  for perm in group.permissions.select_related|slice:':4' %}
+                            <li>{{ perm }}</li>
+                        {% endfor %}
+                    </td>
+                    <td>
+
+                        <a href="{% url 'acl:user-updating' group.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
+                        <a href="{% url 'acl:group-details' group.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
+                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <p class="text-danger font-weight-bold">You don't have a permission to view groups</p>
+            {% endif %}
+            </tbody>
+        </table>
+    {% endif %}
     </div>
 {% endblock %}

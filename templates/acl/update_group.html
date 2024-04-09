@@ -1,0 +1,25 @@
+{% include "acl/navbar.html" %}
+
+{% block container %}
+    <div class="container">
+        <h2>User Details</h2>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Username: {{ user.username }}</h5>
+                <p class="card-text">Email: {{ user.email }}</p>
+                <h6 class="card-subtitle mb-2 text-muted">Permissions:</h6>
+                <ul class="list-group list-group-flush">
+                    {% for permission in user_permissions %}
+                    <li class="list-group-item">{{ permission.name }}</li>
+                    {% endfor %}
+                </ul>
+                <h6 class="card-subtitle mb-2 text-muted">Groups:</h6>
+                <ul class="list-group list-group-flush">
+                    {% for group in user_groups %}
+                    <li class="list-group-item">{{ group.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

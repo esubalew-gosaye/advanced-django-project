@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'acl:content-listing' %}">Home</a>
+                <a class="nav-link" href="{% url 'acl:content-listing' %}?list=users">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link {% if not 'add_users' in permissions %} disabled {% endif %}" href="{% url 'acl:user-creation' %}">Create User</a>

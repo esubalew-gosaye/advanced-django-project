@@ -7,15 +7,13 @@ from django.dispatch import receiver
 
 
 def logged_user(request):
-    _user = User.objects.filter(email=request.session.get('email', ''))
+    _user = User.objects.filter(email=request.session.get('email', '')).first()
     return _user
 
 
 def extract_permissions(user):
     permissions = []
-    if user.exists():
-        user = user[0]
-
+    if user is not None:
         for perm in user.permissions.select_related():
             permissions.append(perm.permission)
 
@@ -23,11 +21,23 @@ def extract_permissions(user):
             for perm in group.permissions.select_related():
                 permissions.append(perm.permission)
 
-        print(permissions)
     return permissions
 
 
-@receiver(post_migrate)
+def get_grouped_permissions():
+    group_of_perm = {}
+    list_permissions = Permission.objects.all()
+
+    for perm in list_permissions:
+        model_name = perm.description.split('|')[1].strip()
+        if model_name in group_of_perm:
+            group_of_perm[model_name].append(perm)
+        else:
+            group_of_perm[model_name] = [perm]
+
+    return group_of_perm
+
+
 def add_permission_to_db(**kwargs):
     # for register a permission to permission model
     my_apps = settings.MY_APPS

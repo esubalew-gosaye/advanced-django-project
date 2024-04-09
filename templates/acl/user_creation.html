@@ -3,45 +3,94 @@
 {% block container %}
 <div class="container">
     <h2>User Creation Form</h2>
-    <form>
+    <form action="" method="post">
+        {% csrf_token %}
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
         </div>
         <div class="form-group">
             <label for="role">Role:</label>
-            <select class="form-control" id="role" required>
+            <select class="form-control" id="role" onchange="showHelpMsg()" name="role" required>
                 <option value="">Select role</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
             </select>
+            <small class="form-text text-muted d-none" id="admin-msg">Admin has all Permission by default.</small>
         </div>
         <div class="form-group">
             <label for="group">Group:</label>
-            <select class="form-control" id="group" required>
-                <option value="">Select group</option>
-                <option value="group1">Group 1</option>
-                <option value="group2">Group 2</option>
+            <select multiple class="form-control" name="groups" id="group" onchange="getSelectedOption()">
+                {% for group in groups %}
+                    <option value="{{ group.id }}">{{ group }}</option>
+                {% endfor %}
             </select>
+        <div id="displayList">Select one group to see permission exists in that group</div>
         </div>
+
         <div class="form-group">
-            <label for="permissions">Permissions:</label>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="permission1">
-                <label class="form-check-label" for="permission1">Permission 1</label>
+                <div class="row">
+                    {% for group, perm in group_of_perm.items %}
+                        <div class="col-md-4 mt-3">
+                            <div class="card-title font-weight-bold">{{ group }}</div>
+                            {% for p in perm %}
+                                <div class="form-check">
+                                   <input
+                                        type="checkbox"
+                                        class="form-check-input"
+                                        id="p.permission"
+                                        name="selected_perm"
+                                        value="{{ p.id }}"
+                                    >
+                                    <label class="form-check-label" for="permission3">{{ p }}</label>
+                                </div>
+                            {% endfor %}
+
+                        </div>
+                    {% endfor %}
+
+                </div>
             </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="permission2">
-                <label class="form-check-label" for="permission2">Permission 2</label>
-            </div>
-            <!-- Add more permissions as needed -->
-        </div>
         <button type="submit" class="btn btn-primary">Create User</button>
     </form>
+    <script>
+        function showHelpMsg() {
+            const block = document.getElementById('admin-msg');
+            block.classList.remove('d-none');
+
+        }
+        function getSelectedOption(){
+            const selectedOptions = document.getElementById("group").selectedOptions;
+            const allCheckBox = document.getElementsByName('selected_perm')
+
+            let selectedOptionsList = [];
+
+            for (let i = 0; i < selectedOptions.length; i++) {
+              selectedOptionsList.push(selectedOptions[i].value);
+            }
+            for (let i = 0; i < allCheckBox.length; i++) {
+                  allCheckBox[i].checked = false;
+            }
+            for(let j = 0; j < selectedOptionsList.length; j++) {
+                fetch(`http://127.0.0.1:8000/api/v1/group/${selectedOptionsList[j]}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        data.data.permissions.forEach(item => {
+                            for (let i = 0; i < allCheckBox.length; i++) {
+                                if(allCheckBox[i].value === item.id.toString()){
+                                  allCheckBox[i].checked = true;
+                                }
+                            }
+                        });
+                    })
+                .catch(error => console.error('Error:', error));
+            }
+        }
+    </script>
 </div>
 {% endblock %}
 

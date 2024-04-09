@@ -1,0 +1,32 @@
+{% include "acl/navbar.html" %}
+
+{% block container %}
+    <div class="container">
+        <h2>User Details</h2>
+        <div class="card">
+            <div class="card-body">
+            <a href="{% url 'acl:content-listing' %}?list=users" class="btn btn-primary btn-sm float-right">Take me back</a>
+                <p class="card-text">username: {{ user.username }}</p>
+                <p class="card-text">email: {{ user.email }}</p>
+                <h5 class="card-subtitle mb-2 ">Permissions:</h5>
+                <ul class="">
+                    {%  for perm in user.permissions.select_related %}
+                        <li>{{ perm }}</li>
+                    {% endfor %}
+                    {%  for group in user.groups.select_related %}
+                        {%  for perm in group.permissions.select_related %}
+                            <li>{{ perm }}</li>
+                        {% endfor %}
+
+                    {% endfor %}
+                </ul>
+                <h5 class="card-subtitle mb-2 ">Groups:</h5>
+                <ul class="">
+                    {%  for group in user.groups.select_related %}
+                        <li >{{ group.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

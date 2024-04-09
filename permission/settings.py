@@ -44,7 +44,7 @@ INSTALLED_APPS = [
 
     'acl',
     'restapi',
-    'django_restframework'
+    'rest_framework'
 ]
 
 # This list stores apps that created by user without including modules

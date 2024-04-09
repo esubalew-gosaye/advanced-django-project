@@ -21,9 +21,9 @@ class User(models.Model):
         ('admin', "Admin"),
         ('user', 'User')
     )
-    username = models.CharField(max_length=100)
-    email = models.EmailField(max_length=150)
-    password = models.CharField(max_length=150)
+    username = models.CharField(max_length=100, unique=True)
+    email = models.EmailField(max_length=150, unique=True)
+    password = models.CharField(max_length=150, default='1234')
     role = models.CharField(max_length=6, choices=ROLES)
     groups = models.ManyToManyField("Group", related_name="members", blank=True, null=True)
     permissions = models.ManyToManyField(Permission, related_name="individual_perm", blank=True, null=True)
