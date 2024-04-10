@@ -4,16 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Navbar Example</title>
+<title>Duo | Advanced Django Tutorial</title>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-<style>
-
-</style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'acl:home' %}">Navbar</a>
+    <a class="navbar-brand" href="{% url 'acl:home' %}">Duo</a>
 
     <span class="text-primary">session: <span class="text-success"> {{ logged.email }}</span></span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,21 +19,21 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'acl:content-listing' %}?list=users">Home</a>
+                <a class="nav-link" href="{% url 'acl:content-listing' %}?list=users"> {% translate 'Home' %} </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if not 'add_users' in permissions %} disabled {% endif %}" href="{% url 'acl:user-creation' %}">Create User</a>
+                <a class="nav-link {% if not 'add_users' in permissions %} disabled {% endif %}" href="{% url 'acl:user-creation' %}"> {% translate 'Create User' %}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {% if not 'add_groups' in permissions %} disabled {% endif %}" href="{% url 'acl:group-creation' %}">Create Group</a>
+                <a class="nav-link {% if not 'add_groups' in permissions %} disabled {% endif %}" href="{% url 'acl:group-creation' %}">{% translate 'Create Group' %}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'acl:user-logout' %}">Logout</a>
+                <a class="nav-link" href="{% url 'acl:user-logout' %}">{% translate 'Logout' %}</a>
             </li>
             <li class="nav-item">
                 <div class="dropdown show">
                   <a class="btn  dropdown-toggle" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Languages
+                    {% translate 'Languages' %}
                   </a>
 
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -55,18 +52,18 @@
 {% block container %}
     {% if is_home_page %}
         <div class="container">
-            <h2>Login</h2>
+            <h2>{% translate "Login Page" %}</h2>
             <form action="login/" method="post">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input type="email" class="form-control" name="email" placeholder="Enter email" required>
+                    <label for="email">{% translate 'Email' %}:</label>
+                    <input type="email" class="form-control" name="email" placeholder="{% translate 'Enter email' %}" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" class="form-control" name="password" placeholder="Enter password" required>
+                    <label for="password">{% translate 'Password' %}:</label>
+                    <input type="password" class="form-control" name="password" placeholder="{% translate 'Enter password' %}" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+                <button type="submit" class="btn btn-primary">{% translate 'Login' %}</button>
             </form>
         </div>
     {% endif %}

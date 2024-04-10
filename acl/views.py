@@ -1,19 +1,17 @@
 from django.shortcuts import render, redirect, reverse
-from acl.models import User, Group, TestModel, Permission
-from django.utils.translation import gettext as _, get_language, activate
+from acl.models import Group
 
 from .include import *
 
+from django.utils.translation import gettext_lazy as _
 
 # Create your views here.
 
 
 def translate(request):
-    # "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-    trans = _('Translation')
 
     context = {
-        'message': trans
+        'message': 'trans'
     }
     return render(request, 'acl/translations.html', context)
 
@@ -43,13 +41,12 @@ def login(request):
         password = request.POST.get("password")
 
         if email and password:
-            print(email, password)
             _usr = User.objects.filter(email=email, password=password)
             if _usr.exists():
                 request.session["username"] = _usr[0].username
                 request.session['email'] = _usr[0].email
 
-                return redirect('acl:content-listing')
+                return redirect(reverse('acl:content-listing') + "?list=users")
     context = {
         'permissions': permissions,
         'logged': {
@@ -178,6 +175,37 @@ def group_detail_page(request, pk):
     return render(request, 'acl/group_detail.html', context)
 
 
+def group_update_page(request, pk):
+    permissions = extract_permissions(logged_user(request))
+    group_of_perm = get_grouped_permissions()
+    group = Group.objects.get(id=pk)
+    list_groups = Group.objects.all()
+
+    if request.method == "POST":
+        group_name = request.POST.get('group_name')
+        selected_perm = request.POST.getlist('selected_perm')
+
+        group.permissions.clear()
+        group.name = group_name
+        group.permissions.set(selected_perm)
+
+        group.save()
+
+        return redirect(reverse('acl:group-details', args=pk))
+
+    context = {
+        'updated_group': group,
+        'list_groups': list_groups,
+        'group_of_perm': group_of_perm,
+        'permissions': permissions,
+        'logged': {
+            'email': request.session.get('email', ''),
+            'username': request.session.get('username', '')
+        }
+    }
+    return render(request, 'acl/update_group.html', context)
+
+
 def user_update_page(request, pk):
     group_of_perm = get_grouped_permissions()
     user = User.objects.get(id=pk)
@@ -218,6 +246,21 @@ def user_update_page(request, pk):
         }
     }
     return render(request, 'acl/update_user.html', context)
+
+
+def user_delete(request, pk):
+    user = User.objects.get(id=pk)
+
+    # ToDo implement safe delete later
+    user.delete()
+    return redirect(reverse('acl:content-listing') + 'list=users')
+
+
+def group_delete(request, pk):
+    group = Group.objects.get(id=pk)
+
+    group.delete()
+    return redirect(reverse('acl:content-listing') + 'list=groups')
 
 
 def logout(request):

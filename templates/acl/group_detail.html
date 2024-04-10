@@ -1,20 +1,21 @@
+{% load i18n %}
 {% include "acl/navbar.html" %}
 
 {% block container %}
     <div class="container">
-        <h2>User Details</h2>
+        <h2>{% translate 'Group Details' %}</h2>
         <div class="card">
             <div class="card-body">
-                <a href="{% url 'acl:content-listing' %}?list=groups" class="btn btn-primary btn-sm float-right">Take me back</a>
-                <p class="card-text">name: {{ group.name }}</p>
-                <h5 class="card-subtitle mb-2 "> Group permissions:</h5>
+                <a href="{% url 'acl:content-listing' %}?list=groups" class="btn btn-primary btn-sm float-right">{% translate 'Take me back' %}</a>
+                <p class="card-text">{% translate 'Group name' %}: {{ group.name }}</p>
+                <h5 class="card-subtitle mb-2 "> {% translate 'Group permissions' %}:</h5>
                 <ul class="">
                     {%  for perm in group.permissions.select_related %}
                         <li>{{ perm }}</li>
                     {% endfor %}
 
                 </ul>
-                <h5 class="card-subtitle mb-2 ">Users in the group:</h5>
+                <h5 class="card-subtitle mb-2 ">{% translate 'Users in the group' %}:</h5>
                 <ul class="">
                     {%  for user in group.members.all %}
                         <li>{{ user }}</li>

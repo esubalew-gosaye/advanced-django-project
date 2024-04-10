@@ -148,14 +148,16 @@ EXTRA_LANG_INFO = {
     }
 }
 LANG_INFO = dict(EXTRA_LANG_INFO.items())
-django.conf.locale.LANG_INFO = LANG_INFO
+django.conf.locale.LANG_INFO.update(LANG_INFO)
+
 LANGUAGES = [
     ('am', _('Amharic')),
     ('en', _('English')),
-    ('om', _('Oromo'))
+    ('om', _('Oromo')),
 ]
 
-LANGUAGE_CODE = 'en'
+
+LANGUAGE_CODE = 'en-US'
 
 LOCALE_PATHS = (
     BASE_DIR / 'locale/',

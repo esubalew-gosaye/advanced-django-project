@@ -2,9 +2,6 @@ from django.conf import settings
 from acl.models import Permission, User
 from django.apps import apps
 
-from django.db.models.signals import post_migrate
-from django.dispatch import receiver
-
 
 def logged_user(request):
     _user = User.objects.filter(email=request.session.get('email', '')).first()

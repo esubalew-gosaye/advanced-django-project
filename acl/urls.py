@@ -13,7 +13,7 @@ urlpatterns = [
 
     path("create_group/", group_creation_page, name="group-creation"),
     path("group_detail/<str:pk>/", group_detail_page, name="group-details"),
-    path("group_update/<str:pk>/", content_listing_page, name="group-updating"),
+    path("group_update/<str:pk>/", group_update_page, name="group-updating"),
 
     path("logout/", logout, name="user-logout")
 ]

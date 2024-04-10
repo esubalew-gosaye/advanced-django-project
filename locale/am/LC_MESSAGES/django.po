@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-07 22:51+0300\n"
+"POT-Creation-Date: 2024-04-10 10:47+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,34 +16,211 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=n;\n"
-
-#: .\acl\views.py:13
-msgid "Translation"
-msgstr "ትርጉም"
 
 #: .\permission\settings.py:154
 msgid "Amharic"
-msgstr "አማርኛ"
+msgstr ""
 
 #: .\permission\settings.py:155
 msgid "English"
-msgstr "እንግሊዘኛ"
+msgstr ""
 
 #: .\permission\settings.py:156
 msgid "Oromo"
-msgstr "ኦሮምኛ"
+msgstr ""
 
-#: .\templates\acl\translations.html:10
-msgid "Hello, My name is"
-msgstr "ሰላም, ስሜ"
+#: .\templates\acl\detail_user.html:6
+msgid "User Details"
+msgstr "የአባል መረጃ"
 
-#: .\templates\acl\translations.html:11
-msgid "What is your name?"
-msgstr "ማነው ስምህ?"
+#: .\templates\acl\detail_user.html:9 .\templates\acl\group_detail.html:9
+msgid "Take me back"
+msgstr "ወድ ኋላ ተምልስ"
 
-#~ msgid "Home"
-#~ msgstr "ዋና ገጽ"
+#: .\templates\acl\detail_user.html:10
+msgid "username"
+msgstr "ልዩ ስም"
 
-#~ msgid "Messages"
-#~ msgstr "መልዕክታት"
+#: .\templates\acl\detail_user.html:11
+msgid "email"
+msgstr "ኢሜይል"
+
+#: .\templates\acl\detail_user.html:12 .\templates\acl\group_creation.html:15
+#: .\templates\acl\update_group.html:15
+msgid "Permissions"
+msgstr "ፍቃዶች"
+
+#: .\templates\acl\detail_user.html:24 .\templates\acl\list_content.html:20
+msgid "Groups"
+msgstr "ቡድኖች"
+
+#: .\templates\acl\group_creation.html:7
+msgid "Group Creation Form"
+msgstr "ቡድን መመዝገቢያ ቅጽ"
+
+#: .\templates\acl\group_creation.html:11 .\templates\acl\update_group.html:11
+msgid "Group Name"
+msgstr "የቡድን ስም"
+
+#: .\templates\acl\group_creation.html:12 .\templates\acl\update_group.html:12
+msgid "Enter group name"
+msgstr "የቡድን ስም አስገቡ"
+
+#: .\templates\acl\group_creation.html:38 .\templates\acl\navbar.html:28
+msgid "Create Group"
+msgstr "ቡድን መዝግብ"
+
+#: .\templates\acl\group_detail.html:6
+msgid "Group Details"
+msgstr "የአባል መረጃ"
+
+#: .\templates\acl\group_detail.html:10
+msgid "Group name"
+msgstr "የቡድን ስም"
+
+#: .\templates\acl\group_detail.html:11
+msgid "Group permissions"
+msgstr "የቡድን ፍቃዶች"
+
+#: .\templates\acl\group_detail.html:18
+msgid "Users in the group"
+msgstr "በቡድኑ ውስጥ ያሉ አባላት"
+
+#: .\templates\acl\list_content.html:9
+msgid "User List"
+msgstr "የአባል ዝርዝር"
+
+#: .\templates\acl\list_content.html:10
+msgid "List Groups"
+msgstr "ቡድኖችን ዘርዝር"
+
+#: .\templates\acl\list_content.html:12 .\templates\acl\list_content.html:69
+msgid "We display 4 permission only here, check detail for more"
+msgstr "አዚህ 4 ፍቃዶች ብቻ ነው ሚታዩት፤ ለተጨማሪ የአባሉን መረጃ ይዩ"
+
+#: .\templates\acl\list_content.html:17 .\templates\acl\update_user.html:11
+#: .\templates\acl\user_creation.html:10
+msgid "Username"
+msgstr "ልዩ ስም"
+
+#: .\templates\acl\list_content.html:18 .\templates\acl\login.html:10
+#: .\templates\acl\navbar.html:59 .\templates\acl\update_user.html:15
+msgid "Email"
+msgstr "ኢሜይል"
+
+#: .\templates\acl\list_content.html:19 .\templates\acl\list_content.html:74
+msgid "Permission"
+msgstr "ፍቃድ"
+
+#: .\templates\acl\list_content.html:21 .\templates\acl\list_content.html:75
+msgid "Actions"
+msgstr "ተግብር"
+
+#: .\templates\acl\list_content.html:50 .\templates\acl\list_content.html:92
+msgid "Update"
+msgstr "አዘምን"
+
+#: .\templates\acl\list_content.html:51 .\templates\acl\list_content.html:93
+msgid "View"
+msgstr "መረጃ"
+
+#: .\templates\acl\list_content.html:52 .\templates\acl\list_content.html:94
+msgid "Delete"
+msgstr "አጥፋ"
+
+#: .\templates\acl\list_content.html:57
+msgid "You don't have a permission to view users"
+msgstr "አባላትን ለማየት መብት የልህም/ሽም"
+
+#: .\templates\acl\list_content.html:65
+msgid "Group List"
+msgstr "ቡድኖች"
+
+#: .\templates\acl\list_content.html:66
+msgid "List Users"
+msgstr "የአባል ዝርዝር"
+
+#: .\templates\acl\list_content.html:73
+msgid "Name"
+msgstr "ስም"
+
+#: .\templates\acl\list_content.html:99
+msgid "You don't have a permission to view groups"
+msgstr "ቡድኖችን ለማየት መብት የልህም/ሽም"
+
+#: .\templates\acl\login.html:6 .\templates\acl\navbar.html:55
+msgid "Login Page"
+msgstr "መግቢያ ገጽ"
+
+#: .\templates\acl\login.html:11 .\templates\acl\navbar.html:60
+#: .\templates\acl\update_user.html:16 .\templates\acl\user_creation.html:15
+msgid "Enter email"
+msgstr "ኢሜይል አስገባ"
+
+#: .\templates\acl\login.html:14 .\templates\acl\navbar.html:63
+msgid "Password"
+msgstr "ሚስጥራዊ ቁልፍ"
+
+#: .\templates\acl\login.html:15 .\templates\acl\navbar.html:64
+msgid "Enter password"
+msgstr "ሚስጥራዊ ቁልፍ አስገባ"
+
+#: .\templates\acl\login.html:17 .\templates\acl\navbar.html:66
+msgid "Login"
+msgstr "ግባ"
+
+#: .\templates\acl\navbar.html:22
+msgid "Home"
+msgstr "ዋና ገጽ"
+
+#: .\templates\acl\navbar.html:25 .\templates\acl\user_creation.html:58
+msgid "Create User"
+msgstr "አባል መዝግብ"
+
+#: .\templates\acl\navbar.html:31
+msgid "Logout"
+msgstr "ውጣ"
+
+#: .\templates\acl\navbar.html:36
+msgid "Languages"
+msgstr "ቋንቋዎች"
+
+#: .\templates\acl\update_group.html:7
+msgid "Group Updation Form"
+msgstr "ቡድን ማዘመኛ ቅጽ"
+
+#: .\templates\acl\update_group.html:40
+msgid "Update Group"
+msgstr "ቡድን አዘምን"
+
+#: .\templates\acl\update_user.html:6
+msgid "User Updation Form"
+msgstr "አባል መረጃ ማዘመኛ ቅጽ"
+
+#: .\templates\acl\update_user.html:12 .\templates\acl\user_creation.html:11
+msgid "Enter username"
+msgstr "ኢሜይል አስገባ"
+
+#: .\templates\acl\update_user.html:19 .\templates\acl\user_creation.html:18
+msgid "Role"
+msgstr "መደብ"
+
+#: .\templates\acl\update_user.html:21 .\templates\acl\user_creation.html:20
+msgid "Select role"
+msgstr "መደብ ምረጥ"
+
+#: .\templates\acl\update_user.html:29 .\templates\acl\user_creation.html:24
+msgid "Admin has all Permission by default"
+msgstr "አስተዳዳሪው ሙሉ መብት ይኖረዋል"
+
+#: .\templates\acl\update_user.html:32
+msgid "Group"
+msgstr "ቡድኖች"
+
+#: .\templates\acl\update_user.html:74
+msgid "Update User"
+msgstr "አባል መዝግብ"
+
+#: .\templates\acl\user_creation.html:6
+msgid "User Creation Form"
+msgstr "አባል መመዝገቢያ ቅጽ"

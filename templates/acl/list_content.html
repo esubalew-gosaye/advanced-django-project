@@ -1,3 +1,4 @@
+{% load i18n %}
 {% include "acl/navbar.html" %}
 
 {% block container %}
@@ -5,19 +6,19 @@
 
     {% if page == 'users' %}
         <h2>
-            User List
-            <a href="?list=groups" class="btn btn-primary float-right">List Groups</a>
+            {% translate 'User List' %}
+            <a href="?list=groups" class="btn btn-primary float-right">{% translate 'List Groups' %}</a>
         </h2>
-        <small>We display 4 permission only here, check detail for more.</small>
+        <small>{% translate 'We display 4 permission only here, check detail for more' %}.</small>
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Username</th>
-                    <th>Email</th>
-                    <th>Permission</th>
-                    <th>Groups</th>
-                    <th>Actions</th>
+                    <th>{% translate 'Username' %}</th>
+                    <th>{% translate 'Email' %}</th>
+                    <th>{% translate 'Permission' %}</th>
+                    <th>{% translate 'Groups' %}</th>
+                    <th>{% translate 'Actions' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,14 +47,14 @@
 {#                        <a href="{% url 'edit_user' user.id %}" class="btn btn-primary">Edit</a>#}
 {#                        <a href="{% url 'delete_user' user.id %}" class="btn btn-danger">Delete</a>#}
 
-                        <a href="{% url 'acl:user-updating' user.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
-                        <a href="{% url 'acl:user-details' user.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
-                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">Delete</a>
+                        <a href="{% url 'acl:user-updating' user.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">{% translate 'Update' %}</a>
+                        <a href="{% url 'acl:user-details' user.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">{% translate 'View' %}</a>
+                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">{% translate 'Delete' %}</a>
                     </td>
                 </tr>
                 {% endfor %}
             {% else %}
-                <p class="text-danger font-weight-bold">You don't have a permission to view</p>
+                <p class="text-danger font-weight-bold">{% translate "You don't have a permission to view users" %}</p>
             {% endif %}
             </tbody>
         </table>
@@ -61,17 +62,17 @@
     {% if page == 'groups' %}
         <table class="table table-striped">
         <h2>
-            Group List
-            <a href="?list=users" class="btn btn-primary float-right">List Users</a>
+            {% translate 'Group List' %}
+            <a href="?list=users" class="btn btn-primary float-right">{% translate 'List Users' %}</a>
 
         </h2>
-        <small>We display 4 permission only here, check detail for more.</small>
+        <small>{% translate 'We display 4 permission only here, check detail for more' %}</small>
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Permission</th>
-                    <th>Actions</th>
+                    <th>{% translate 'Name' %}</th>
+                    <th>{% translate 'Permission' %}</th>
+                    <th>{% translate 'Actions' %}</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,14 +89,14 @@
                     </td>
                     <td>
 
-                        <a href="{% url 'acl:user-updating' group.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">Edit</a>
-                        <a href="{% url 'acl:group-details' group.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">View</a>
-                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">Delete</a>
+                        <a href="{% url 'acl:group-updating' group.id %}" class="btn btn-primary {% if not 'change_users' in permissions %} disabled {% endif %}">{% translate 'Update' %}</a>
+                        <a href="{% url 'acl:group-details' group.id %}" class="btn btn-success {% if not 'view_users' in permissions %} disabled {% endif %}">{% translate 'View' %}</a>
+                        <a href="" class="btn btn-danger {% if not 'delete_users' in permissions %} disabled {% endif %}">{% translate 'Delete' %}</a>
                     </td>
                 </tr>
                 {% endfor %}
             {% else %}
-                <p class="text-danger font-weight-bold">You don't have a permission to view groups</p>
+                <p class="text-danger font-weight-bold">{% translate "You don't have a permission to view groups" %}</p>
             {% endif %}
             </tbody>
         </table>

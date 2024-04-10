@@ -1,26 +1,27 @@
+{% load i18n %}
 {% include "acl/navbar.html" %}
 
 {% block container %}
 <div class="container">
-    <h2>User Creation Form</h2>
+    <h2>{% translate 'User Creation Form' %}</h2>
     <form action="" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
+            <label for="username">{% translate 'Username' %}:</label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="{% translate 'Enter username' %}" required>
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
+            <input type="email" class="form-control" name="email" id="email" placeholder="{% translate 'Enter email' %}" required>
         </div>
         <div class="form-group">
-            <label for="role">Role:</label>
+            <label for="role">{% translate 'Role' %}:</label>
             <select class="form-control" id="role" onchange="showHelpMsg()" name="role" required>
-                <option value="">Select role</option>
+                <option value="">{% translate 'Select role' %}</option>
                 <option value="admin">Admin</option>
                 <option value="user">User</option>
             </select>
-            <small class="form-text text-muted d-none" id="admin-msg">Admin has all Permission by default.</small>
+            <small class="form-text text-muted d-none" id="admin-msg">{% translate 'Admin has all Permission by default' %}.</small>
         </div>
         <div class="form-group">
             <label for="group">Group:</label>
@@ -29,7 +30,6 @@
                     <option value="{{ group.id }}">{{ group }}</option>
                 {% endfor %}
             </select>
-        <div id="displayList">Select one group to see permission exists in that group</div>
         </div>
 
         <div class="form-group">
@@ -55,7 +55,7 @@
 
                 </div>
             </div>
-        <button type="submit" class="btn btn-primary">Create User</button>
+        <button type="submit" class="btn btn-primary">{% translate 'Create User' %}</button>
     </form>
     <script>
         function showHelpMsg() {
