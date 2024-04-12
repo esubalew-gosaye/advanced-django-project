@@ -25,6 +25,9 @@ def home_page(request):
         "is_home_page": True,
         'permissions': permissions,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -50,6 +53,9 @@ def login(request):
     context = {
         'permissions': permissions,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -70,6 +76,9 @@ def content_listing_page(request):
         'groups': groups,
         'permissions': permissions,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -111,6 +120,9 @@ def user_creation_page(request):
         'group_of_perm': group_of_perm,
         'groups': list_groups,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -138,6 +150,9 @@ def group_creation_page(request):
         'permissions': permissions,
         'group_of_perm': group_of_perm,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -153,6 +168,9 @@ def user_detail_page(request, pk):
         'permissions': permissions,
         'user': user,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -168,6 +186,9 @@ def group_detail_page(request, pk):
         'permissions': permissions,
         'group': group,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -199,6 +220,9 @@ def group_update_page(request, pk):
         'group_of_perm': group_of_perm,
         'permissions': permissions,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }
@@ -241,6 +265,9 @@ def user_update_page(request, pk):
         'group_of_perm': group_of_perm,
         'permissions': permissions,
         'logged': {
+            'user': User.objects.filter(
+                email=request.session.get('email', '')
+            ).first(),
             'email': request.session.get('email', ''),
             'username': request.session.get('username', '')
         }

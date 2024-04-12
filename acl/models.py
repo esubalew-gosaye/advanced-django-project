@@ -27,6 +27,8 @@ class User(models.Model):
     role = models.CharField(max_length=6, choices=ROLES)
     groups = models.ManyToManyField("Group", related_name="members", blank=True, null=True)
     permissions = models.ManyToManyField(Permission, related_name="individual_perm", blank=True, null=True)
+    picture = models.ImageField(upload_to='static/image', default='static/image/default_profile_pic.jpg')
+    in_trash = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username
