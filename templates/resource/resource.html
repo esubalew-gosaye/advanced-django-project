@@ -1,0 +1,84 @@
+{% load i18n %}
+{% include "acl/navbar.html" %}
+
+{% block container %}
+    <div class="container">
+        <h2>{% translate 'Submit Resource Here' %}</h2>
+        <form action="" method="post" enctype="multipart/form-data" class="w-75">
+            {% csrf_token %}
+            {{ resource_form }}
+
+            <button type="submit" class="btn btn-primary mt-2 float-right">{% translate 'Create Resource' %}</button>
+        </form>
+
+        <h2>Resource List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>File Path</th>
+                    <th>Actions</th>
+                    <th>Shared</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for resource in resources %}
+                <tr>
+                    <td>{{ resource.name }}</td>
+                    <td>{{ resource.file_path }}</td>
+                    <td>
+                        <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                        <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Update</a>
+                        <a href="#" class="btn btn-secondary"><i class="fas fa-share-alt"></i> Share</a>
+                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i> View</a>
+                    </td>
+                    <td>
+                        {% if not resource.shared %}
+                            <i class="fas fa-share"></i> Shared
+                        {% else %}
+                            <!-- Add any other icon or text for not shared -->
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="#" data-toggle="modal" data-target="#shareModal">Share</a>
+
+        <!-- Share Modal -->
+        <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="shareModalLabel">Share with Users</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="users">Select Users:</label>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="user1" value="user1">
+                                    <label class="form-check-label" for="user1">User 1</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="user2" value="user2">
+                                    <label class="form-check-label" for="user2">User 2</label>
+                                </div>
+                                <!-- Add more checkboxes for users as needed -->
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Share</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock container %}

@@ -1,0 +1,52 @@
+{% load multiply %}
+{% if messages %}
+    <div class="position-relative w-25 float-right">
+    {% for message in messages %}
+
+        <div
+                class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} alert-dismissible position-absolute"
+                style="top: {{ forloop.counter0|mult:55 }}px;width: 100%; right: 10px;" role="alert"
+        >
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ message|safe|escape  }}
+        </div>
+
+    {% endfor %}
+    </div>
+{% endif %}
+
+{#<script>#}
+{#    // Wait for the DOM content to be fully loaded#}
+{#    document.addEventListener("DOMContentLoaded", function() {#}
+{#        const alerts = document.querySelectorAll('.alert');#}
+{##}
+{#        alerts.forEach(function(alert) {#}
+{#            setTimeout(function() {#}
+{#                alert.remove();#}
+{#            }, 2000);#}
+{#        });#}
+{#    });#}
+{##}
+{#</script>#}
+
+<script>
+    // Wait for the DOM content to be fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        let alerts = document.querySelectorAll('.alert');
+        alerts = Array.from(alerts).reverse();
+        let index = 0;
+
+        function removeAlert() {
+            if (index < alerts.length) {
+                setTimeout(function() {
+                    alerts[index].remove();
+                    index++;
+                    removeAlert(); // Call removeAlert function recursively
+                }, 1000); // 100 milliseconds delay between each removal
+            }
+        }
+
+        // Start the removal process
+        removeAlert();
+    });
+</script>

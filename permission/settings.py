@@ -41,10 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Modules
+    'rest_framework',
 
+    # User apps
     'acl',
     'restapi',
-    'rest_framework'
+    'resource'
 ]
 
 # This list stores apps that created by user without including modules
@@ -174,7 +177,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-MEDIA_URL = ''
+MEDIA_URL = 'media/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static/'
