@@ -3,49 +3,38 @@
 
 {% block container %}
     <div class="container">
-        <h2>{% translate 'Submit Resource Here' %}</h2>
-        <form action="" method="post" enctype="multipart/form-data" class="w-75">
-            {% csrf_token %}
-            {{ resource_form }}
+        <h2>{% translate "Resource List" %}</h2>
+        <a href="#" class="btn btn-primary float-right">{% translate 'List Users' %}</a>
 
-            <button type="submit" class="btn btn-primary mt-2 float-right">{% translate 'Create Resource' %}</button>
-        </form>
-
-        <h2>Resource List</h2>
         <table class="table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>File Path</th>
-                    <th>Actions</th>
-                    <th>Shared</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for resource in resources %}
-                <tr>
-                    <td>{{ resource.name }}</td>
-                    <td>{{ resource.file_path }}</td>
-                    <td>
-                        <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
-                        <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Update</a>
-                        <a href="#" class="btn btn-secondary"><i class="fas fa-share-alt"></i> Share</a>
-                        <a href="#" class="btn btn-info"><i class="fas fa-eye"></i> View</a>
-                    </td>
-                    <td>
-                        {% if not resource.shared %}
-                            <i class="fas fa-share"></i> Shared
-                        {% else %}
-                            <!-- Add any other icon or text for not shared -->
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-        <a href="#" data-toggle="modal" data-target="#shareModal">Share</a>
-
+        <thead>
+            <tr>
+                <th>{% translate "Name" %}</th>
+                <th>{% translate "File Path" %}</th>
+                <th>{% translate "Actions" %}</th>
+                <th>{% translate "Shared" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for resource in resources %}
+            <tr>
+                <td>{{ resource.name }}</td>
+                <td>{{ resource.resource }}</td>
+                <td>
+                    <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i> {% translate "Delete" %}</a>
+                    <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> {% translate "Update" %}</a>
+                    <a href="#" data-toggle="modal" data-item-id="{{ resource.id }}" data-target="#shareModal" class="share-btn btn btn-secondary"><i class="fas fa-share-alt"></i> {% translate "Share" %}</a>
+                    <a href="#" class="btn btn-info"><i class="fas fa-eye"></i> {% translate "View" %}</a>
+                </td>
+                <td>
+                    {% if not resource.shared %}
+                        <i class="fas fa-share"></i> {% translate "Shared" %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
         <!-- Share Modal -->
         <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -56,29 +45,61 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="users">Select Users:</label>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="user1" value="user1">
-                                    <label class="form-check-label" for="user1">User 1</label>
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="user2" value="user2">
-                                    <label class="form-check-label" for="user2">User 2</label>
-                                </div>
-                                <!-- Add more checkboxes for users as needed -->
+                    <form action="" method="post" id="share_form">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-control">
+                                <label>
+                                    <input type="checkbox" name="any_one" >
+                                    Any one with link
+                                </label>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Share</button>
-                    </div>
+                            <label>
+                                <select multiple class="form-control mt-2" name="users">
+                                    {% for user in users %}
+                                        <option value="{{ user.id }}">{{ user.username }} | {{ user.email }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                            <div class="form-group">
+                                <input type="datetime-local" name="expire_date" class="form-control datetime">
+                                <small>if time is not provided the link it won't expire</small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary" value="Share">
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const shareButtons = document.querySelectorAll(".share-btn");
+                const modal = document.getElementById("shareModal");
+
+                shareButtons.forEach(function(button) {
+                    button.addEventListener("click", function() {
+                        const itemId = button.dataset.itemId;
+                        let form = document.getElementById("share_form");
+                        let hiddenInput = document.createElement("input");
+                        hiddenInput.type = "hidden";
+                        hiddenInput.name = "resource_id";
+                        hiddenInput.value = `${itemId}`;
+
+                        const submitButton = form.querySelector('.modal-body');
+                        form.insertBefore(hiddenInput, submitButton)
+                        modal.style.display = "block";
+                    });
+                });
+
+              document.querySelector(".close").addEventListener("click", function() {
+                modal.style.display = "none";
+              });
+            });
+        </script>
 
     </div>
 {% endblock container %}

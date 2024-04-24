@@ -18,7 +18,7 @@ class Resource(models.Model):
                                 verbose_name=_("Resource"),
                                 error_messages=_("Resource field is required"))
 
-    slug_name = models.SlugField(null=False)
+    slug_name = models.SlugField(default="", null="")
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
 
@@ -31,11 +31,11 @@ class Resource(models.Model):
 
 
 class ShareResource(models.Model):
-    users = models.ManyToManyField(User, related_name='shares')
+    users = models.ManyToManyField(User, related_name='shares', null=True, blank=True)
     resource = models.ForeignKey(Resource, on_delete=models.CASCADE, related_name='file')
     any_one = models.BooleanField(default=False)
     expire_date = models.DateTimeField(blank=True, null=True)
-    created_at = models.DateField(auto_created=True)
+    created_at = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.resource.name

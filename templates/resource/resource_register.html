@@ -1,10 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load i18n %}
+{% include "acl/navbar.html" %}
 
-</body>
-</html>
+{% block container %}
+    <div class="container">
+        <h2>{% translate 'Submit Resource Here' %}</h2>
+        <form action="{% url 'resource:resource-homepage' %}" method="post" enctype="multipart/form-data" class="w-75">
+            {% csrf_token %}
+            {{ resource_form }}
+
+            <button type="submit" class="btn btn-primary mt-2 float-right">{% translate 'Create Resource' %}</button>
+        </form>
+    </div>
+{% endblock %}

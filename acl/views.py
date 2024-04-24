@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from acl.models import Group
+from django.contrib import messages
 
 from .include import *
 
@@ -48,8 +49,12 @@ def login(request):
             if _usr.exists():
                 request.session["username"] = _usr[0].username
                 request.session['email'] = _usr[0].email
-
+                messages.success(request, "Welcome, successfully logged in.")
                 return redirect(reverse('acl:content-listing') + "?list=users")
+            else:
+                messages.error(request, "User with this credential doesn't exist!")
+        else:
+            messages.error(request, "Please Provide both email and password!")
     context = {
         'permissions': permissions,
         'logged': {
@@ -113,6 +118,7 @@ def user_creation_page(request):
                 new_user.permissions.add(perm)
         for group in groups:
             new_user.groups.add(list_groups.get(id=group))
+        messages.success(request, "User successfully created.")
         new_user.save()
 
     context = {
@@ -145,6 +151,7 @@ def group_creation_page(request):
         for perm_name in selected_perm:
             new_group.permissions.add(list_permissions.get(permission__contains=perm_name))
         new_group.save()
+        messages.success(request, "Group successfully created.")
 
     context = {
         'permissions': permissions,
@@ -209,7 +216,7 @@ def group_update_page(request, pk):
         group.permissions.clear()
         group.name = group_name
         group.permissions.set(selected_perm)
-
+        messages.info(request, "Group information successfully updated.")
         group.save()
 
         return redirect(reverse('acl:group-details', args=pk))
@@ -254,7 +261,7 @@ def user_update_page(request, pk):
 
         if role == 'admin':
             user.permissions.set(Permission.objects.all())
-
+        messages.info(request, "User information successfully updated.")
         user.save()
 
         return redirect(reverse('acl:user-details', args=pk))
@@ -292,7 +299,7 @@ def group_delete(request, pk):
 
 def logout(request):
     _user = logged_user(request)
-
+    messages.info(request, "Successfully logged out.")
     request.session.pop('email', None)
     request.session.pop('username', None)
 
